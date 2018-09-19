@@ -1,0 +1,37 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-dependencies-php-74-composer-${{ hashFiles('composer.json') }}
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Build app
+        run: php dock app:build --build-version=${GITHUB_REF##*/}
+
+      - name: Release app
+        uses: softprops/action-gh-release@v1
+        with:
+          files: builds/dock
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
