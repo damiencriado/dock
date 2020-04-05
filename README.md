@@ -1,5 +1,6 @@
 <h1 align="center">Dock 🐳</h1>
 <p align="center">
+<img src="https://github.com/damiencriado/dock/workflows/Build%20&%20Release/badge.svg" alt="Build & Release">
 <img src="https://img.shields.io/github/v/release/damiencriado/dock" alt="Latest Stable Version">
 <img src="https://img.shields.io/github/license/damiencriado/dock" alt="License">
 </p>
