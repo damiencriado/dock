@@ -34,3 +34,9 @@ $ dock
 ```
 
 If `docker-compose.yml` is found in current dir, some `docker-compose` options will be available.
+
+## Update
+
+```sh
+$ dock self-update
+```
