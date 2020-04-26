@@ -29,7 +29,7 @@ class QuitDockerDesktop extends Command
      */
     public function handle()
     {
-        $this->task('Docker Desktop is exiting', function () {
+        $this->task('Docker Desktop is stopping', function () {
             shell_exec('killall Docker');
 
             while (Str::contains(shell_exec('docker info 2>&1'), 'Containers:')) {
