@@ -20,7 +20,7 @@ class SelfUpdate extends Command
      *
      * @var string
      */
-    protected $description = 'Self Update App';
+    protected $description = 'Update Dock';
 
     /**
      * Execute the console command.

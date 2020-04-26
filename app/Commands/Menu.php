@@ -54,6 +54,7 @@ class Menu extends Command
                 $commands->push(ComposeLogs::class);
                 $commands->push(ComposePull::class);
             }
+            $commands->push(SelfUpdate::class);
             $commands->push(QuitDockerDesktop::class);
         } elseif (is_dir('/Applications/Docker.app')) {
             $commands->push(StartDockerDesktop::class);
