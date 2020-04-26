@@ -33,44 +33,52 @@ class SelfUpdate extends Command
         [$newVersion, $releaseUrl] = $this->getReleaseUrl();
 
         if ($oldVersion !== $newVersion) {
-            $this->task('Downloading latest release', function () use ($releaseUrl) {
-                try {
-                    $binary = file_get_contents($releaseUrl);
-                    file_put_contents($this->getTempPharFile(), $binary);
+            $this->alert(sprintf('Update available from %s to %s', $oldVersion, $newVersion));
+            if ($this->confirm('Do you want to update', 'yes')) {
+                $this->task('Downloading latest release', function () use ($releaseUrl) {
+                    try {
+                        $binary = file_get_contents($releaseUrl);
+                        file_put_contents($this->getTempPharFile(), $binary);
 
-                    return true;
-                } catch (Exception $e) {
-                    return false;
-                }
-            });
+                        return true;
+                    } catch (Exception $e) {
+                        return false;
+                    }
+                });
 
-            $this->task('Validate phar', function () {
-                try {
-                    chmod($this->getTempPharFile(), fileperms($this->getLocalPharFile()));
+                $this->task('Validate phar', function () {
+                    try {
+                        chmod($this->getTempPharFile(), fileperms($this->getLocalPharFile()));
 
-                    return true;
-                } catch (Exception $e) {
-                    return false;
-                }
-            });
+                        return true;
+                    } catch (Exception $e) {
+                        return false;
+                    }
+                });
 
-            $this->task('Replace old phar with new phar', function () {
-                try {
-                    $this->replacePhar();
+                $this->task('Replace old phar with new phar', function () {
+                    try {
+                        $this->replacePhar();
 
-                    return true;
-                } catch (Exception $e) {
-                    return false;
-                }
-            });
+                        return true;
+                    } catch (Exception $e) {
+                        return false;
+                    }
+                });
 
-            $this->info(sprintf(
-                'Updated from version %s to %s.',
-                $oldVersion,
-                $newVersion
-            ));
+                $this->info(sprintf(
+                    'Updated from %s to %s.',
+                    $oldVersion,
+                    $newVersion
+                ));
+
+                exit();
+            }
         } else {
             $this->info('You have the latest version installed.');
+            if ($this->confirm('Press Enter to continue', 'yes')) {
+                //
+            }
         }
     }
 
