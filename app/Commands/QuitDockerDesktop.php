@@ -20,7 +20,7 @@ class QuitDockerDesktop extends Command
      *
      * @var string
      */
-    protected $description = 'Quit docker Desktop';
+    protected $description = 'Quit Docker Desktop';
 
     /**
      * Execute the console command.
