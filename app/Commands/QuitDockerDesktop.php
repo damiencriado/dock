@@ -6,21 +6,21 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Str;
 use LaravelZero\Framework\Commands\Command;
 
-class StartDockerForMac extends Command
+class QuitDockerDesktop extends Command
 {
     /**
      * The signature of the command.
      *
      * @var string
      */
-    protected $signature = 'docker:start';
+    protected $signature = 'docker:quit';
 
     /**
      * The description of the command.
      *
      * @var string
      */
-    protected $description = 'Start Docker for Mac';
+    protected $description = 'Quit docker Desktop';
 
     /**
      * Execute the console command.
@@ -29,12 +29,17 @@ class StartDockerForMac extends Command
      */
     public function handle()
     {
-        shell_exec('open /Applications/Docker.app');
-        $this->info('Docker for Mac is starting...');
+        $this->task('Docker Desktop is exiting', function () {
+            shell_exec('killall Docker');
 
-        while (! Str::contains(shell_exec('docker info 2>&1'), 'Containers:')) {
+            while (Str::contains(shell_exec('docker info 2>&1'), 'Containers:')) {
+                sleep(1);
+            }
+
             sleep(1);
-        }
+
+            return true;
+        });
     }
 
     /**
