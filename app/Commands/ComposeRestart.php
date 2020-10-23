@@ -28,7 +28,7 @@ class ComposeRestart extends Command
      */
     public function handle()
     {
-        passthru('docker-compose down && docker-compose up');
+        passthru('docker-compose down && docker-compose up -d');
     }
 
     /**
