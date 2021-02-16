@@ -74,6 +74,7 @@ class Menu extends Command
             $menu->addOption(QuitDockerDesktop::class, (new QuitDockerDesktop())->getDescription());
         } elseif (is_dir('/Applications/Docker.app')) {
             $menu = $this->menu('Dock (Docker is not started)')
+                ->setWidth($this->menu()->getTerminal()->getWidth())
                 ->setForegroundColour('255', 'white')
                 ->setBackgroundColour('196', 'red');
 
