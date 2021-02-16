@@ -1,3 +1,12 @@
+## [1.5.3](https://github.com/damiencriado/dock/compare/v1.5.2...v1.5.3) (2021-02-16)
+
+
+### Bug Fixes
+
+* edit action title ([aade202](https://github.com/damiencriado/dock/commit/aade2028fe1f52ae3301a9cd20c45752584bee18))
+
+
+
 ## [1.5.2](https://github.com/damiencriado/dock/compare/v1.5.1...v1.5.2) (2021-02-16)
 
 
@@ -38,10 +47,6 @@
 
 * add pagination & search ([726028a](https://github.com/damiencriado/dock/commit/726028aa46e420dc24dc6830abb6ca80a7138f52))
 * upgrade packages ([8d6cde5](https://github.com/damiencriado/dock/commit/8d6cde599a8b0ba72e4514a50a6952714ae5374b))
-
-
-
-## [1.3.2](https://github.com/damiencriado/dock/compare/v1.3.1...v1.3.2) (2020-10-23)
 
 
 
