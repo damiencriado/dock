@@ -57,7 +57,7 @@ trait Finder
             $menu->addLineBreak(' ', 1);
 
             $menu->addOption('refresh', 'Refresh list');
-            $menu->addItem('Filter by name or image', function (CliMenu $cliMenu) use ($menu) {
+            $menu->addItem('Search by name or image', function (CliMenu $cliMenu) use ($menu) {
                 $popupStyle = (new MenuStyle)
                     ->setBg('164', 'magenta')
                     ->setFg('15', 'white');
