@@ -1,3 +1,12 @@
+# [1.5.0](https://github.com/damiencriado/dock/compare/v1.4.0...v1.5.0) (2021-02-16)
+
+
+### Features
+
+* 10 containers per page ([3ff6583](https://github.com/damiencriado/dock/commit/3ff658350da5e3833b07aa4bbdcfb250d51032df))
+
+
+
 # [1.4.0](https://github.com/damiencriado/dock/compare/v1.3.2...v1.4.0) (2021-02-16)
 
 
@@ -22,10 +31,6 @@
 
 
 ## [1.2.3](https://github.com/damiencriado/dock/compare/v1.2.2...v1.2.3) (2020-04-26)
-
-
-
-## [1.2.2](https://github.com/damiencriado/dock/compare/v1.2.1...v1.2.2) (2020-04-26)
 
 
 
