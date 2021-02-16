@@ -9,7 +9,7 @@
 
 Dock is a GUI tool made with CLI to manage Docker.
 
-<img src="https://damiencriado-public.s3.amazonaws.com/github/dock/screen_1.png" width="650">
+<p align="center"><img src="https://raw.githubusercontent.com/damiencriado/art/master/dock/screen1.png" width="650"></p>
 
 ## Install
 
