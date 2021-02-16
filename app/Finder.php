@@ -86,6 +86,7 @@ trait Finder
 
             if ($choice instanceof InputResult) {
                 $filter = $choice->fetch();
+                $currentPage = 1;
                 $choice = 'loop';
             }
 
