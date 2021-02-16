@@ -1,3 +1,13 @@
+## [1.5.2](https://github.com/damiencriado/dock/compare/v1.5.1...v1.5.2) (2021-02-16)
+
+
+### Bug Fixes
+
+* remove empty line ([c6df6f6](https://github.com/damiencriado/dock/commit/c6df6f6ae0ee2be8dfdf1c8b452f8d504333c392))
+* set fullwidth when docker is down ([4ab0d93](https://github.com/damiencriado/dock/commit/4ab0d93ff18856070859b06ed73cf90dbba887ea))
+
+
+
 ## [1.5.1](https://github.com/damiencriado/dock/compare/v1.5.0...v1.5.1) (2021-02-16)
 
 
@@ -32,10 +42,6 @@
 
 
 ## [1.3.2](https://github.com/damiencriado/dock/compare/v1.3.1...v1.3.2) (2020-10-23)
-
-
-
-## [1.3.1](https://github.com/damiencriado/dock/compare/v1.2.3...v1.3.1) (2020-10-23)
 
 
 
