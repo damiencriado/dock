@@ -17,7 +17,7 @@ trait Finder
 
         $choice = 'loop';
         $currentPage = 1;
-        $perPage = 15;
+        $perPage = 10;
         $filter = null;
 
         while ($choice === 'loop' || $choice === 'search') {
