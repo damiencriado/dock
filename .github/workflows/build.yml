@@ -26,15 +26,18 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
 
+      - name: Install dependencies
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - name: Test building app
+        run: php dock app:build
+
       - name: Conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
         with:
           skip-version-file: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install dependencies
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Build app
         run: php dock app:build --build-version=$VERSION
@@ -62,3 +65,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: builds/dock
           asset_name: dock
+          asset_content_type: application/octet-stream
