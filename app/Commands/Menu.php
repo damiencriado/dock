@@ -56,7 +56,6 @@ class Menu extends Command
 
         if ($dockerIsRunning) {
             if ($count) {
-                $menu->addLineBreak(' ', 1);
                 $menu->addOption(SSH::class, (new SSH())->getDescription());
                 $menu->addOption(Kill::class, (new Kill())->getDescription());
                 $menu->addOption(Restart::class, (new Restart())->getDescription());
