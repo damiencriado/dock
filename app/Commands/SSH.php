@@ -2,12 +2,15 @@
 
 namespace App\Commands;
 
+use App\Finder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Collection;
 use LaravelZero\Framework\Commands\Command;
 
 class SSH extends Command
 {
+    use Finder;
+
     /**
      * The signature of the command.
      *
@@ -29,42 +32,12 @@ class SSH extends Command
      */
     public function handle()
     {
-        $containers = $this->getContainers();
-        $menu = $containers->map(static function ($args) {
-            return sprintf('%s - %s', $args['name'], $args['image']);
-        })->toArray();
+        $id = $this->finder('SSH');
 
-        $option = $this->menu('Containers', $menu)
-            ->setExitButtonText('Back')
-            ->addLineBreak(' ', 1)
-            ->open();
-
-        if ($option !== null) {
-            $selectedContainer = $containers->get($option);
-
+        if ($id !== null) {
             $this->info('Connecting...');
-            passthru(sprintf('docker exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -ti %s bash', $selectedContainer['id']));
+            passthru("docker exec -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" -ti {$id} bash");
         }
-    }
-
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    private function getContainers(): Collection
-    {
-        $shell = shell_exec("docker container ls --format '{{.ID}} {{.Image}} {{.Names}}'");
-
-        return collect(explode(PHP_EOL, $shell))->filter(static function ($line) {
-            return $line !== '';
-        })->map(static function ($line) {
-            $attributes = explode(' ', $line);
-
-            return [
-                'id'    => $attributes[0],
-                'image' => $attributes[1],
-                'name'  => $attributes[2],
-            ];
-        });
     }
 
     /**

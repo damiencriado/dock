@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Finder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
@@ -9,6 +10,8 @@ use LaravelZero\Framework\Commands\Command;
 
 class Menu extends Command
 {
+    use Finder;
+
     /**
      * The signature of the command.
      *
@@ -33,62 +36,65 @@ class Menu extends Command
         $dockerIsRunning = Str::contains(shell_exec('docker info 2>&1'), 'Containers:');
         $composeFound = file_exists(getcwd().'/docker-compose.yml');
 
-        $commands = collect();
+        $title = "Dock";
 
         if ($dockerIsRunning) {
             $count = collect(explode(PHP_EOL, shell_exec('docker ps -q')))->filter(function ($container) {
                 return $container !== '';
             })->count();
-
-
-            if ($count) {
-                $commands->push(SSH::class);
-                $commands->push(Kill::class);
-                $commands->push(Restart::class);
-            }
-
-            if ($composeFound) {
-                $commands->push(ComposeUp::class);
-                $commands->push(ComposeDown::class);
-                $commands->push(ComposeRestart::class);
-                $commands->push(ComposeLogs::class);
-                $commands->push(ComposePull::class);
-            }
-            $commands->push(QuitDockerDesktop::class);
-        } elseif (is_dir('/Applications/Docker.app')) {
-            if ($composeFound) {
-                $commands->push(StartDockerDesktopAndComposeUp::class);
-            }
-            $commands->push(StartDockerDesktop::class);
+            $title .= ' | Containers: '.$count;
         }
 
-        $commands->push(SelfUpdate::class);
-
-        $options = $commands->map(static function ($command) {
-            return (new $command)->getDescription();
-        });
-
-        $title = sprintf('Dock (%s %s running', $count ?? 0, Str::plural('container', $count ?? 0));
         if ($composeFound) {
-            $title .= ', docker-compose found';
-        }
-        $title .= ')';
-
-        $menu = $this->menu($title, $options->toArray())->addLineBreak(' ', 1);
-
-        if (! $dockerIsRunning) {
-            $menu = $this->menu('Dock (Docker is not started)', $options->toArray())
-                ->setForegroundColour('white')
-                ->setBackgroundColour('red');
+            $title .= ' | docker-compose found';
         }
 
-        $option = $menu->open();
+        $menu = $this->menu($title)
+            ->setWidth($this->menu()->getTerminal()->getWidth())
+            ->setForegroundColour('15', 'white')
+            ->setBackgroundColour('21', 'blue');
 
-        if ($option === null) {
+        if ($dockerIsRunning) {
+            if ($count) {
+                $menu->addLineBreak(' ', 1);
+                $menu->addOption(SSH::class, (new SSH())->getDescription());
+                $menu->addOption(Kill::class, (new Kill())->getDescription());
+                $menu->addOption(Restart::class, (new Restart())->getDescription());
+                $menu->addLineBreak(' ', 1);
+            }
+
+            if ($composeFound) {
+                $menu->addOption(ComposeUp::class, (new ComposeUp())->getDescription());
+                $menu->addOption(ComposeDown::class, (new ComposeDown())->getDescription());
+                $menu->addOption(ComposeRestart::class, (new ComposeRestart())->getDescription());
+                $menu->addOption(ComposeLogs::class, (new ComposeLogs())->getDescription());
+                $menu->addOption(ComposePull::class, (new ComposePull())->getDescription());
+                $menu->addLineBreak(' ', 1);
+            }
+
+            $menu->addOption(QuitDockerDesktop::class, (new QuitDockerDesktop())->getDescription());
+        } elseif (is_dir('/Applications/Docker.app')) {
+            $menu = $this->menu('Dock (Docker is not started)')
+                ->setForegroundColour('255', 'white')
+                ->setBackgroundColour('196', 'red');
+
+            if ($composeFound) {
+                $menu->addOption(StartDockerDesktopAndComposeUp::class,
+                    (new StartDockerDesktopAndComposeUp())->getDescription());
+            }
+            $menu->addOption(StartDockerDesktop::class, (new StartDockerDesktop())->getDescription());
+        }
+        $menu->addOption(SelfUpdate::class, (new SelfUpdate())->getDescription());
+
+        $menu->addLineBreak(' ', 1);
+
+        $choice = $menu->open();
+
+        if ($choice === null) {
             exit();
         }
 
-        Artisan::call($commands[$option], [], $this->getOutput());
+        Artisan::call($choice, [], $this->getOutput());
 
         $this->handle();
     }

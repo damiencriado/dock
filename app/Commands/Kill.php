@@ -2,12 +2,14 @@
 
 namespace App\Commands;
 
+use App\Finder;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Support\Collection;
 use LaravelZero\Framework\Commands\Command;
 
 class Kill extends Command
 {
+    use Finder;
+
     /**
      * The signature of the command.
      *
@@ -29,36 +31,12 @@ class Kill extends Command
      */
     public function handle()
     {
-        $containers = $this->getContainers();
-        $menu = $containers->map(static function ($args) {
-            return $args[1];
-        })->toArray();
+        $id = $this->finder('Kill a container');
 
-        $option = $this->menu('Select container to kill', $menu)
-            ->setExitButtonText('Back')
-            ->addLineBreak(' ', 1)
-            ->open();
-
-        if ($option !== null) {
-            $selectedContainer = $containers->get($option);
-
+        if ($id !== null) {
             $this->info('Killing...');
-            passthru(sprintf('docker container kill %s', $selectedContainer[0]));
+            passthru(sprintf('docker container kill %s', $id));
         }
-    }
-
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    private function getContainers(): Collection
-    {
-        $shell = shell_exec("docker container ls --format '{{.ID}} {{.Names}}'");
-
-        return collect(explode(PHP_EOL, $shell))->filter(static function ($line) {
-            return $line !== '';
-        })->map(static function ($line) {
-            return explode(' ', $line);
-        });
     }
 
     /**
