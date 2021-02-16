@@ -1,6 +1,11 @@
 # [1.4.0](https://github.com/damiencriado/dock/compare/v1.3.2...v1.4.0) (2021-02-16)
 
 
+### Bug Fixes
+
+* ci build ([8da93a2](https://github.com/damiencriado/dock/commit/8da93a249fdfe3f1bb563d3ae644d49ec80eeb87))
+
+
 ### Features
 
 * add pagination & search ([726028a](https://github.com/damiencriado/dock/commit/726028aa46e420dc24dc6830abb6ca80a7138f52))
