@@ -1,3 +1,12 @@
+## [1.5.1](https://github.com/damiencriado/dock/compare/v1.5.0...v1.5.1) (2021-02-16)
+
+
+### Bug Fixes
+
+* reset page to 1 after filtering results ([2c65fc4](https://github.com/damiencriado/dock/commit/2c65fc4e6d70d9442a465a7430711caaee93587a))
+
+
+
 # [1.5.0](https://github.com/damiencriado/dock/compare/v1.4.0...v1.5.0) (2021-02-16)
 
 
@@ -27,10 +36,6 @@
 
 
 ## [1.3.1](https://github.com/damiencriado/dock/compare/v1.2.3...v1.3.1) (2020-10-23)
-
-
-
-## [1.2.3](https://github.com/damiencriado/dock/compare/v1.2.2...v1.2.3) (2020-04-26)
 
 
 
