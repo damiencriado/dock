@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/damiencriado/dock/compare/v1.5.3...v1.6.0) (2021-06-03)
+
+
+### Features
+
+* add --remove-orphans flag ([e5edcad](https://github.com/damiencriado/dock/commit/e5edcad7697ba4a147fc08a9ba93c803a5d6bb57))
+
+
+
 ## [1.5.3](https://github.com/damiencriado/dock/compare/v1.5.2...v1.5.3) (2021-02-16)
 
 
@@ -32,21 +41,6 @@
 ### Features
 
 * 10 containers per page ([3ff6583](https://github.com/damiencriado/dock/commit/3ff658350da5e3833b07aa4bbdcfb250d51032df))
-
-
-
-# [1.4.0](https://github.com/damiencriado/dock/compare/v1.3.2...v1.4.0) (2021-02-16)
-
-
-### Bug Fixes
-
-* ci build ([8da93a2](https://github.com/damiencriado/dock/commit/8da93a249fdfe3f1bb563d3ae644d49ec80eeb87))
-
-
-### Features
-
-* add pagination & search ([726028a](https://github.com/damiencriado/dock/commit/726028aa46e420dc24dc6830abb6ca80a7138f52))
-* upgrade packages ([8d6cde5](https://github.com/damiencriado/dock/commit/8d6cde599a8b0ba72e4514a50a6952714ae5374b))
 
 
 
