@@ -1,3 +1,12 @@
+# [1.7.0](https://github.com/damiencriado/dock/compare/v1.6.0...v1.7.0) (2022-01-04)
+
+
+### Features
+
+* add command to ssh into image ([322361d](https://github.com/damiencriado/dock/commit/322361dcd3c9ca42f38189b1f0fe22475df6dab6))
+
+
+
 # [1.6.0](https://github.com/damiencriado/dock/compare/v1.5.3...v1.6.0) (2021-06-03)
 
 
@@ -32,15 +41,6 @@
 ### Bug Fixes
 
 * reset page to 1 after filtering results ([2c65fc4](https://github.com/damiencriado/dock/commit/2c65fc4e6d70d9442a465a7430711caaee93587a))
-
-
-
-# [1.5.0](https://github.com/damiencriado/dock/compare/v1.4.0...v1.5.0) (2021-02-16)
-
-
-### Features
-
-* 10 containers per page ([3ff6583](https://github.com/damiencriado/dock/commit/3ff658350da5e3833b07aa4bbdcfb250d51032df))
 
 
 
