@@ -20,45 +20,66 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+      
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      
+      - name: Prepare Git
+        run: |
+          git config --global user.email "damien@damien.id"
+          git config --global user.name "Damien Criado"
 
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Test building app
         run: php dock app:build
+      
+      - name: Standard Version
+        run: |
+          sudo npm i -g standard-version
+          standard-version
+      
+      - name: Get latest tag
+        id: latest-tag
+        run: echo "::set-output name=value::$(git describe --tags --abbrev=0)"
 
-      - name: Conventional Changelog Action
+      - name: Extract release notes from changelog
+        uses: yashanand1910/standard-release-notes@v1.2.1
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
         with:
-          skip-version-file: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          changelog_path: ./CHANGELOG.md
+          version: ${{ steps.latest-tag.outputs.version }}
 
       - name: Build app
         run: php dock app:build --build-version=$VERSION
         env:
-          VERSION: ${{ steps.changelog.outputs.tag }}
+          VERSION: ${{ steps.latest-tag.outputs.value }}
 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        if: ${{ steps.changelog.outputs.release_notes != '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+          tag_name: ${{ steps.latest-tag.outputs.value }}
+          release_name: ${{ steps.latest-tag.outputs.value }}
+          body: ${{ steps.changelog.outputs.release_notes }}
 
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        if: ${{ steps.changelog.outputs.release_notes != '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
