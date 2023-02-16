@@ -12,7 +12,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ ubuntu-latest ]
-        php: [ 8.1 ]
+        php: [ 8.2 ]
         stability: [ prefer-stable ]
 
     name: ${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
@@ -27,12 +27,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-      
+
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: 14
-      
+
       - name: Prepare Git
         run: |
           git config --global user.email "damien@damien.id"
@@ -43,12 +43,12 @@ jobs:
 
       - name: Test building app
         run: php dock app:build
-      
+
       - name: Standard Version
         run: |
           sudo npm i -g standard-version
           standard-version
-      
+
       - name: Get latest tag
         id: latest-tag
         run: echo "::set-output name=value::$(git describe --tags --abbrev=0)"
