@@ -28,7 +28,7 @@ class ComposeLogs extends Command
      */
     public function handle()
     {
-        passthru('docker-compose logs -f');
+        passthru('docker compose logs -f');
     }
 
     /**

@@ -39,7 +39,7 @@ class StartDockerDesktopAndComposeUp extends Command
             return true;
         });
 
-        passthru('docker-compose up -d');
+        passthru('docker compose up -d');
     }
 
     /**

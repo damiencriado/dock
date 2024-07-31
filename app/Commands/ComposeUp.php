@@ -28,7 +28,7 @@ class ComposeUp extends Command
      */
     public function handle()
     {
-        passthru('docker-compose up -d --remove-orphans');
+        passthru('docker compose up -d --remove-orphans');
     }
 
     /**

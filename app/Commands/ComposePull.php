@@ -28,7 +28,7 @@ class ComposePull extends Command
      */
     public function handle()
     {
-        passthru('docker-compose pull');
+        passthru('docker compose pull');
     }
 
     /**
