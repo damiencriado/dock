@@ -28,7 +28,7 @@ class ComposeRestart extends Command
      */
     public function handle()
     {
-        passthru('docker-compose down --remove-orphans && docker-compose up -d --remove-orphans');
+        passthru('docker compose down --remove-orphans && docker compose up -d --remove-orphans');
     }
 
     /**
