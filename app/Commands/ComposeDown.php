@@ -28,7 +28,7 @@ class ComposeDown extends Command
      */
     public function handle()
     {
-        passthru('docker-compose down --remove-orphans');
+        passthru('docker compose down --remove-orphans');
     }
 
     /**
