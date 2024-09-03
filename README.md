@@ -24,7 +24,7 @@ chmod +x /usr/local/bin/dock
 ### Option 2: Automatically
 Use this shell script to install `dock` to `/usr/local/bin/dock`
 ```sh
-sudo curl -L -o /usr/local/bin/dock $(curl -s https://api.github.com/repos/damiencriado/dock/releases/latest | grep "browser_" | cut -d\" -f4) && sudo chmod +x /usr/local/bin/dock
+sudo mkdir -p /usr/local/bin && curl -L -o /usr/local/bin/dock $(curl -s https://api.github.com/repos/damiencriado/dock/releases/latest | grep "browser_" | cut -d\" -f4) && sudo chmod +x /usr/local/bin/dock
 ```
 
 ## Usage
