@@ -19,7 +19,7 @@ class ComposeRestart extends Command
      *
      * @var string
      */
-    protected $description = '[Compose] Restart';
+    protected $description = 'Restart service containers';
 
     /**
      * Execute the console command.

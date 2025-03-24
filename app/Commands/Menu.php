@@ -34,15 +34,18 @@ class Menu extends Command
     public function handle()
     {
         $dockerIsRunning = Str::contains(shell_exec('docker info 2>&1'), 'Containers:');
-        $composeFound = file_exists(getcwd().'/docker-compose.yml');
+        $context = trim(shell_exec('docker context show 2>&1'));
+        $composeFound = file_exists(getcwd() . '/docker-compose.yml');
 
         $title = "Dock";
 
         if ($dockerIsRunning) {
-            $count = collect(explode(PHP_EOL, shell_exec('docker ps -q')))->filter(function ($container) {
+            $title .= ' | Context: ' . $context;
+
+            $hasContainers = collect(explode(PHP_EOL, shell_exec('docker ps -q')))->filter(function ($container) {
                 return $container !== '';
             })->count();
-            $title .= ' | Containers: '.$count;
+            $title .= ' | Containers: ' . $hasContainers;
         }
 
         if ($composeFound) {
@@ -54,16 +57,18 @@ class Menu extends Command
             ->setForegroundColour('15', 'white')
             ->setBackgroundColour('21', 'blue');
 
+
         if ($dockerIsRunning) {
-            if ($count) {
+            if ($hasContainers) {
+                $menu->addStaticItem('Containers');
                 $menu->addOption(SSH::class, (new SSH())->getDescription());
-                $menu->addOption(SSHImage::class, (new SSHImage())->getDescription());
                 $menu->addOption(Kill::class, (new Kill())->getDescription());
                 $menu->addOption(Restart::class, (new Restart())->getDescription());
                 $menu->addLineBreak(' ', 1);
             }
 
             if ($composeFound) {
+                $menu->addStaticItem('Compose');
                 $menu->addOption(ComposeUp::class, (new ComposeUp())->getDescription());
                 $menu->addOption(ComposeDown::class, (new ComposeDown())->getDescription());
                 $menu->addOption(ComposeRestart::class, (new ComposeRestart())->getDescription());
@@ -72,22 +77,19 @@ class Menu extends Command
                 $menu->addLineBreak(' ', 1);
             }
 
-            $menu->addOption(QuitDockerDesktop::class, (new QuitDockerDesktop())->getDescription());
-        } elseif (is_dir('/Applications/Docker.app')) {
+            $menu->addStaticItem('Images');
+            $menu->addOption(SSHImage::class, (new SSHImage())->getDescription());
+            $menu->addLineBreak(' ', 1);
+        } elseif (is_dir('/Applications/Docker.app') || is_dir('/Applications/OrbStack.app')) {
             $menu = $this->menu('Dock (Docker is not started)')
                 ->setWidth($this->menu()->getTerminal()->getWidth())
                 ->setForegroundColour('255', 'white')
                 ->setBackgroundColour('196', 'red');
 
-            if ($composeFound) {
-                $menu->addOption(StartDockerDesktopAndComposeUp::class,
-                    (new StartDockerDesktopAndComposeUp())->getDescription());
-            }
             $menu->addOption(StartDockerDesktop::class, (new StartDockerDesktop())->getDescription());
+            $menu->addOption(StartOrbStack::class, (new StartOrbStack())->getDescription());
+            $menu->addLineBreak(' ', 1);
         }
-        $menu->addOption(SelfUpdate::class, (new SelfUpdate())->getDescription());
-
-        $menu->addLineBreak(' ', 1);
 
         $choice = $menu->open();
 

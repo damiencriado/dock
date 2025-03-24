@@ -19,7 +19,7 @@ class ComposeDown extends Command
      *
      * @var string
      */
-    protected $description = '[Compose] Down';
+    protected $description = 'Stop and remove containers, networks';
 
     /**
      * Execute the console command.

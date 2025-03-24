@@ -19,7 +19,7 @@ class ComposeUp extends Command
      *
      * @var string
      */
-    protected $description = '[Compose] Up';
+    protected $description = 'Create and start containers';
 
     /**
      * Execute the console command.

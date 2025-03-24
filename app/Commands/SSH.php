@@ -23,7 +23,7 @@ class SSH extends Command
      *
      * @var string
      */
-    protected $description = 'SSH into a Container';
+    protected $description = 'SSH into a container';
 
     /**
      * Execute the console command.

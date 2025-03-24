@@ -19,7 +19,7 @@ class ComposePull extends Command
      *
      * @var string
      */
-    protected $description = '[Compose] Pull service images';
+    protected $description = 'Pull service images';
 
     /**
      * Execute the console command.

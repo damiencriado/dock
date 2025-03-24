@@ -6,21 +6,21 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Str;
 use LaravelZero\Framework\Commands\Command;
 
-class StartDockerDesktopAndComposeUp extends Command
+class StartOrbStack extends Command
 {
     /**
      * The signature of the command.
      *
      * @var string
      */
-    protected $signature = 'docker:start-up';
+    protected $signature = 'orbstack:start';
 
     /**
      * The description of the command.
      *
      * @var string
      */
-    protected $description = 'Start Docker Desktop and Compose Up';
+    protected $description = 'Start OrbStack';
 
     /**
      * Execute the console command.
@@ -29,8 +29,8 @@ class StartDockerDesktopAndComposeUp extends Command
      */
     public function handle()
     {
-        $this->task('Docker Desktop is starting', function () {
-            shell_exec('open /Applications/Docker.app');
+        $this->task('OrbStack is starting', function () {
+            shell_exec('open /Applications/OrbStack.app');
 
             while (! Str::contains(shell_exec('docker info 2>&1'), 'Containers:')) {
                 sleep(1);
@@ -39,7 +39,7 @@ class StartDockerDesktopAndComposeUp extends Command
             return true;
         });
 
-        passthru('docker compose up -d');
+
     }
 
     /**

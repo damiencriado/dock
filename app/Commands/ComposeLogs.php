@@ -19,7 +19,7 @@ class ComposeLogs extends Command
      *
      * @var string
      */
-    protected $description = '[Compose] Logs';
+    protected $description = 'View output from containers';
 
     /**
      * Execute the console command.
