@@ -61,25 +61,21 @@ class Menu extends Command
         if ($dockerIsRunning) {
             if ($hasContainers) {
                 $menu->addStaticItem('Containers');
-                $menu->addOption(SSH::class, (new SSH())->getDescription());
-                $menu->addOption(Kill::class, (new Kill())->getDescription());
-                $menu->addOption(Restart::class, (new Restart())->getDescription());
+                $menu->addOption(Terminal::class, 'Connect to a container');
+                $menu->addOption(Kill::class, 'Kill a container');
+                $menu->addOption(Restart::class, 'Restart a container');
                 $menu->addLineBreak(' ', 1);
             }
 
             if ($composeFound) {
-                $menu->addStaticItem('Compose');
-                $menu->addOption(ComposeUp::class, (new ComposeUp())->getDescription());
-                $menu->addOption(ComposeDown::class, (new ComposeDown())->getDescription());
-                $menu->addOption(ComposeRestart::class, (new ComposeRestart())->getDescription());
-                $menu->addOption(ComposeLogs::class, (new ComposeLogs())->getDescription());
-                $menu->addOption(ComposePull::class, (new ComposePull())->getDescription());
+                $menu->addStaticItem('Docker Compose');
+                $menu->addOption(ComposeUp::class, 'docker compose up');
+                $menu->addOption(ComposeDown::class, 'docker compose down');
+                $menu->addOption(ComposeRestart::class, 'docker compose restart');
+                $menu->addOption(ComposeLogs::class, 'docker compose logs');
+                $menu->addOption(ComposePull::class, 'docker compose pull');
                 $menu->addLineBreak(' ', 1);
             }
-
-            $menu->addStaticItem('Images');
-            $menu->addOption(SSHImage::class, (new SSHImage())->getDescription());
-            $menu->addLineBreak(' ', 1);
         } elseif (is_dir('/Applications/Docker.app') || is_dir('/Applications/OrbStack.app')) {
             $menu = $this->menu('Dock (Docker is not started)')
                 ->setWidth($this->menu()->getTerminal()->getWidth())

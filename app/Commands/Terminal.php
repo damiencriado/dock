@@ -7,7 +7,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Collection;
 use LaravelZero\Framework\Commands\Command;
 
-class SSH extends Command
+class Terminal extends Command
 {
     use Finder;
 
@@ -16,14 +16,14 @@ class SSH extends Command
      *
      * @var string
      */
-    protected $signature = 'ssh';
+    protected $signature = 'terminal';
 
     /**
      * The description of the command.
      *
      * @var string
      */
-    protected $description = 'SSH into a container';
+    protected $description = 'Connect to a container';
 
     /**
      * Execute the console command.
@@ -32,7 +32,7 @@ class SSH extends Command
      */
     public function handle()
     {
-        $id = $this->finder('SSH');
+        $id = $this->finder('Terminal');
 
         if ($id !== null) {
             $this->info('Connecting...');
