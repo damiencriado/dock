@@ -77,13 +77,19 @@ class Menu extends Command
                 $menu->addLineBreak(' ', 1);
             }
         } elseif (is_dir('/Applications/Docker.app') || is_dir('/Applications/OrbStack.app')) {
-            $menu = $this->menu('Dock (Docker is not started)')
+            $menu = $this->menu('Dock | Docker is not started')
                 ->setWidth($this->menu()->getTerminal()->getWidth())
                 ->setForegroundColour('255', 'white')
                 ->setBackgroundColour('196', 'red');
 
-            $menu->addOption(StartDockerDesktop::class, (new StartDockerDesktop())->getDescription());
-            $menu->addOption(StartOrbStack::class, (new StartOrbStack())->getDescription());
+            if (is_dir('/Applications/OrbStack.app')) {
+                $menu->addOption(StartOrbStack::class, (new StartOrbStack())->getDescription());
+            }
+
+            if (is_dir('/Applications/Docker.app')) {
+                $menu->addOption(StartDockerDesktop::class, (new StartDockerDesktop())->getDescription());
+            }
+
             $menu->addLineBreak(' ', 1);
         }
 
